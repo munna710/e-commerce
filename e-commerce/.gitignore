@@ -1,2 +1,22 @@
 # created by virtualenv automatically
-*
+# Ignore virtual environment
+venv/
+
+# Ignore Python bytecode
+*.pyc
+__pycache__/
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore database
+db.sqlite3
+
+# Ignore media
+/media/
+
+# Ignore static files
+/static/
+
+# Ignore environment variables file
+.env

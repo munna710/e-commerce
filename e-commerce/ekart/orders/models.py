@@ -5,7 +5,6 @@ from customers.models import Customer
 # Create your models here.
 from products.models import Product
 
-
 #data model for order
 class Order(models.Model):
     LIVE=1

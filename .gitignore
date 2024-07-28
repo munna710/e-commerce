@@ -1,0 +1,5 @@
+myenv/
+*/migrations/
+*.sqlite3
+__pycache__/
+*.py[cod]

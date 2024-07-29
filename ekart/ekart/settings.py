@@ -31,12 +31,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 SECRET_KEY = 'django-insecure-(@+q$5p=b)b=7_65h=zq*5b#!j^*(5_#d70gh!9!#**a!3))f('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['e-commerce-production-bdbc.up.railway.app']
+ALLOWED_HOSTS = ['e-commerce-production-bdbc.up.railway.app', 'localhost', '127.0.0.1']
 
 CSRF_COOKIE_SECURE = True
-
+CSRF_TRUSTED_ORIGINS = ['https://e-commerce-production-bdbc.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [

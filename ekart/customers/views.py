@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from . models import Customer
+from .email_utils import send_welcome_email 
+
 def sign_out(request):
     logout(request)
     return redirect('home')
@@ -34,6 +36,13 @@ def show_account(request):
             )
             success_message="User registred successfully"
             messages.success(request,success_message)
+
+            # Send welcome email
+            # Send welcome email
+            try:
+                send_welcome_email(email)
+            except Exception as email_error:
+                messages.error(request, f"Email sending failed: {email_error}")
             
         except Exception as e:
             error_message="Duplicate username or invalid inputs"

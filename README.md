@@ -22,8 +22,8 @@ This project is an e-commerce application built with Django. It includes feature
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/munna710/e-commerce.git
+    cd e-commerce
     ```
 
 2. **Create a virtual environment and activate it:**

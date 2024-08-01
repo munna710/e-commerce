@@ -112,31 +112,4 @@ The project is deployed on Railway. You can access it at [https://e-commerce-pro
 4. Proceed to checkout and complete the payment using Razorpay.
 5. Registered users will receive an email notification upon successful registration and order placement.
 
-## Email Integration
 
-To integrate email notifications, ensure you have added your email configuration to the `.env` file and updated your `settings.py` as shown in the setup steps. Here is an example of how to send an email upon user registration:
-
-```python
-# views.py
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            send_mail(
-                'Welcome to Our E-Commerce Site',
-                'Thank you for registering with us.',
-                settings.EMAIL_HOST_USER,
-                [user.email],
-                fail_silently=False,
-            )
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})

@@ -11,6 +11,9 @@ This project is an e-commerce application built with Django. It includes feature
 - Payment Integration with Razorpay
 - Automatic Email Notifications to Registered Users
 
+## Deployment
+
+The project is deployed on Railway. You can access it at [https://e-commerce-production-bdbc.up.railway.app/](https://e-commerce-production-bdbc.up.railway.app/).
 ## Prerequisites
 
 - Python 3.x

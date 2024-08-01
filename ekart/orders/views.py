@@ -3,8 +3,13 @@ from .models import Order,OrderedItem
 from django.contrib import messages
 from products.models import Product
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-# Create your views here.
+import razorpay
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+
+# Initialize Razorpay client
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
 def show_cart(request):
     user=request.user
     customer=user.customer_profile
@@ -40,20 +45,32 @@ def checkout_cart(request):
                 order_status=Order.CART_STAGE
             )
             if order_obj:
-                order_obj.order_status=Order.ORDER_CONFIRMED
-                order_obj.total_price=total
-                order_obj.save()
-                print("price",order_obj.total_price)
-                status_message="Your order is processed. Your item will be delivered with in 2 days"
-                messages.success(request,status_message)
-            else:
-                status_message="unable to processed. No items in cart"
-                messages.error(request,status_message)
-        except Exception as e:
-                status_message="unable to processed. No items in cart"
-                messages.error(request,status_message)
-    return redirect('cart')
+                # Create Razorpay order
+                amount = int(total * 100)  # Convert to paisa
+                razorpay_order = razorpay_client.order.create(dict(amount=amount, currency='INR', payment_capture='1'))
+                razorpay_order_id = razorpay_order['id']
 
+                # Save order details
+                order_obj.order_status = Order.ORDER_CONFIRMED
+                order_obj.total_price = total
+                order_obj.razorpay_order_id = razorpay_order_id
+                order_obj.save()
+
+                context = {
+                    'order': order_obj,
+                    'razorpay_order_id': razorpay_order_id,
+                    'razorpay_merchant_key': settings.RAZORPAY_KEY_ID,
+                    'amount': amount,
+                    'currency': 'INR'
+                }
+                return render(request, 'create_payment.html', context)
+            else:
+                status_message = "Unable to process. No items in cart"
+                messages.error(request, status_message)
+        except Exception as e:
+            status_message = "Unable to process. No items in cart"
+            messages.error(request, status_message)
+    return redirect('cart')
 
 @login_required(login_url='account')        
 def show_orders(request):

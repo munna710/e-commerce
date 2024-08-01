@@ -1,0 +1,28 @@
+<!-- templates/payments/create_payment.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h1>Complete Payment</h1>
+    <form id="razorpay-form">
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="{{ razorpay_merchant_key }}"
+            data-amount="{{ amount }}"
+            data-currency="{{ currency }}"
+            data-order_id="{{ razorpay_order_id }}"
+            data-buttontext="Pay with Razorpay"
+            data-name="Your Company Name"
+            data-description="Payment for Order {{ order.id }}"
+            data-image="https://your-logo-url.com/logo.png"
+            data-prefill.name="{{ request.user.username }}"
+            data-prefill.email="{{ request.user.email }}"
+            data-theme.color="#F37254"
+        ></script>
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+    </form>
+</body>
+</html>

@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'products',
     "customers",
     "orders",
-    "themes"
+    "themes",
+    "payments"
 ]
 
 MIDDLEWARE = [
@@ -85,14 +86,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ekart.wsgi.application'
 
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASE_URL = os.getenv("DATABASE_URL")
+
+# DATABASES = {
+#     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+# }
 
 DATABASES = {
-    "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
